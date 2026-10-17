@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job For Deshi - EU Job Portal & Employee Reviews</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        deshiRed: '#e11d48',
+                        deshiGreen: '#059669',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #0284c7 100%);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 pb-20 md:pb-6 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="gradient-bg text-white sticky top-0 z-40 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <div onclick="switchTab('jobs')" class="flex items-center space-x-2 cursor-pointer">
+                <div class="bg-white text-emerald-600 rounded-lg p-2 font-black text-xl shadow">
+                    <i class="fa-solid me-1 fa-briefcase"></i>JFD
+                </div>
+                <div>
+                    <h1 class="font-black text-lg md:text-xl tracking-tight leading-none flex items-center gap-1.5">
+                        Job For Deshi <span class="text-xs bg-emerald-400/30 text-emerald-100 font-medium px-2 py-0.5 rounded-full border border-emerald-300/40">EU Portal</span>
+                    </h1>
+                    <p class="text-[11px] text-emerald-100 font-medium">Connecting South Asians with EU Careers</p>
+                </div>
+            </div>
+
+            <!-- Country Switcher (Desktop/Tablet) -->
+            <div class="hidden md:flex items-center space-x-2 bg-emerald-900/40 p-1.5 rounded-xl border border-emerald-400/30">
+                <span class="text-xs font-semibold px-2 text-emerald-200"><i class="fa-solid fa-globe mr-1"></i>Country:</span>
+                <button onclick="setCountry('DE')" id="btn-DE" class="country-btn px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 bg-white text-emerald-800 shadow">
+                    🇩🇪 Germany
+                </button>
+                <button onclick="setCountry('UK')" id="btn-UK" class="country-btn px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 text-emerald-100 hover:bg-white/10">
+                    🇬🇧 UK
+                </button>
+                <button onclick="setCountry('PT')" id="btn-PT" class="country-btn px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 text-emerald-100 hover:bg-white/10">
+                    🇵🇹 Portugal
+                </button>
+                <button onclick="setCountry('NL')" id="btn-NL" class="country-btn px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 text-emerald-100 hover:bg-white/10">
+                    🇳🇱 Netherlands
+                </button>
+            </div>
+
+            <!-- Hamburger Button for Mobile Drawer -->
+            <button onclick="toggleMobileMenu()" class="p-2 text-white hover:bg-emerald-700/50 rounded-lg focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Country Selector Bar -->
+        <div class="md:hidden bg-emerald-800/60 border-t border-emerald-600/40 px-4 py-2 flex items-center justify-between text-xs overflow-x-auto hide-scrollbar gap-2">
+            <span class="text-emerald-200 whitespace-nowrap font-semibold"><i class="fa-solid fa-flag mr-1"></i>Select Flag:</span>
+            <div class="flex items-center gap-1">
+                <button onclick="setCountry('DE')" id="mbtn-DE" class="m-country-btn px-2.5 py-1 rounded-md font-bold whitespace-nowrap bg-white text-emerald-800">🇩🇪 DE</button>
+                <button onclick="setCountry('UK')" id="mbtn-UK" class="m-country-btn px-2.5 py-1 rounded-md font-bold whitespace-nowrap text-emerald-100 bg-emerald-700/50">🇬🇧 UK</button>
+                <button onclick="setCountry('PT')" id="mbtn-PT" class="m-country-btn px-2.5 py-1 rounded-md font-bold whitespace-nowrap text-emerald-100 bg-emerald-700/50">🇵🇹 PT</button>
+                <button onclick="setCountry('NL')" id="mbtn-NL" class="m-country-btn px-2.5 py-1 rounded-md font-bold whitespace-nowrap text-emerald-100 bg-emerald-700/50">🇳🇱 NL</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Slide-out Drawer / Overlay Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out hidden">
+        <div onclick="toggleMobileMenu()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-80 bg-white shadow-2xl flex flex-col z-10">
+            <div class="gradient-bg p-5 text-white flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-compass text-2xl text-emerald-300"></i>
+                    <span class="font-bold text-lg">Main Menu</span>
+                </div>
+                <button onclick="toggleMobileMenu()" class="p-1 rounded-full hover:bg-white/20 text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-4 space-y-2 flex-1 overflow-y-auto">
+                <button onclick="navigateTab('jobs')" class="w-full text-left px-4 py-3 rounded-xl flex items-center space-x-3 font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                    <i class="fa-solid fa-briefcase text-emerald-600 w-6"></i>
+                    <span>Browse Jobs</span>
+                </button>
+                <button onclick="navigateTab('reviews')" class="w-full text-left px-4 py-3 rounded-xl flex items-center space-x-3 font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                    <i class="fa-solid fa-comments text-emerald-600 w-6"></i>
+                    <span>Employee Reviews (Arbeitnehmer)</span>
+                </button>
+                <button onclick="navigateTab('calculator')" class="w-full text-left px-4 py-3 rounded-xl flex items-center space-x-3 font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                    <i class="fa-solid fa-calculator text-emerald-600 w-6"></i>
+                    <span>Salary Calculator (Gehaltsrechner)</span>
+                </button>
+                <button onclick="navigateTab('saved')" class="w-full text-left px-4 py-3 rounded-xl flex items-center space-x-3 font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                    <i class="fa-solid fa-bookmark text-emerald-600 w-6"></i>
+                    <span>Saved Jobs</span>
+                </button>
+            </div>
+
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-xs text-slate-500 text-center">
+                <p class="font-medium text-slate-600">Job For Deshi EU Platform</p>
+                <p class="mt-1">WhatsApp Direct HR: +351 920 755 167</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
+
+        <!-- TAB 1: JOBS LISTING VIEW -->
+        <section id="tab-jobs" class="tab-content">
+
+            <!-- Search & Filters -->
+            <div class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-slate-100 mb-6 space-y-4">
+                <div class="flex flex-col md:flex-row gap-3">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="search-keyword" onkeyup="filterJobs()" placeholder="Job title, company, or skills (e.g., Driver, IT, Cook)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="filter-category" onchange="filterJobs()" class="px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white">
+                            <option value="">All Categories</option>
+                            <option value="Gastronomy / Hotel">Gastronomy / Hotel</option>
+                            <option value="IT & Tech">IT & Tech</option>
+                            <option value="Logistics & Delivery">Logistics & Delivery</option>
+                            <option value="Healthcare & Care">Healthcare & Care</option>
+                            <option value="Construction & Trades">Construction & Trades</option>
+                            <option value="Cleaning & General">Cleaning & General</option>
+                        </select>
+                        <select id="filter-type" onchange="filterJobs()" class="px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white">
+                            <option value="">All Types</option>
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Minijob">Minijob</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-100 gap-2">
+                    <span id="job-count-badge" class="font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                        Showing 0 Jobs
+                    </span>
+                    <span class="flex items-center gap-1 text-slate-500">
+                        <i class="fa-solid fa-circle-check text-emerald-500"></i> Direct WhatsApp HR applications enabled
+                    </span>
+                </div>
+            </div>
+
+            <!-- Jobs Feed Container -->
+            <div id="jobs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Dynamic Job Cards Injected Here -->
+            </div>
+        </section>
+
+
+        <!-- TAB 2: EMPLOYEE REVIEWS (ARBEITNEHMER-BEWERTUNGEN) -->
+        <section id="tab-reviews" class="tab-content hidden space-y-6">
+            <div class="gradient-bg text-white rounded-2xl p-6 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 text-center md:text-left">
+                    <span class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full border border-white/30 uppercase tracking-wider">
+                        <i class="fa-solid fa-user-check mr-1"></i> Real Employee Feedback
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">Arbeitnehmer-Bewertungen</h2>
+                    <p class="text-emerald-100 text-sm max-w-xl">
+                        Discover what it's really like to work for EU employers. Read authentic ratings, pros, cons, and advice submitted by fellow South Asian workers.
+                    </p>
+                </div>
+                <button onclick="openReviewModal()" class="w-full md:w-auto px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-pen-to-square"></i> Write an Employee Review
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                    <input type="text" id="review-search" onkeyup="renderEmployeeReviews()" placeholder="Search company or job title..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div class="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-2 rounded-xl w-full sm:w-auto text-center">
+                    <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> 100% Anonymous & Verified Feedback
+                </div>
+            </div>
+
+            <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Dynamic Employee Review Cards Injected Here -->
+            </div>
+        </section>
+
+
+        <!-- TAB 3: SALARY CALCULATOR (GEHALTSRECHNER) -->
+        <section id="tab-calculator" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+                <div class="text-center space-y-2 mb-6">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto text-xl shadow-inner">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h2 class="text-2xl font-extrabold text-slate-800">EU Salary Calculator (Gehaltsrechner)</h2>
+                    <p class="text-slate-500 text-sm">Estimate your monthly gross-to-net salary and tax deductions in your selected country.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Target Country</label>
+                        <select id="calc-country" onchange="calculateSalary()" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-slate-50">
+                            <option value="DE">🇩🇪 Germany (Tax Class 1 Est.)</option>
+                            <option value="UK">🇬🇧 United Kingdom (PAYE Est.)</option>
+                            <option value="PT">🇵🇹 Portugal (IRS & SS Est.)</option>
+                            <option value="NL">🇳🇱 Netherlands (30% Rule / Standard)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Monthly Gross Salary (€ / £)</label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-3.5 font-bold text-slate-400" id="calc-currency-symbol">€</span>
+                            <input type="number" id="calc-gross" value="2800" oninput="calculateSalary()" class="w-full pl-8 pr-4 py-3 rounded-xl border border-slate-200 text-base font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tax Class / Status</label>
+                            <select id="calc-status" onchange="calculateSalary()" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-slate-50">
+                                <option value="single">Single / Unmarried</option>
+                                <option value="married">Married / Partner</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Health Insurance</label>
+                            <select id="calc-health" onchange="calculateSalary()" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-slate-50">
+                                <option value="public">Public / Mandatory</option>
+                                <option value="private">Private</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-slate-900 text-white rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <span class="text-sm font-medium text-slate-400">Estimated Monthly Net Take-Home</span>
+                        <span id="res-net-salary" class="text-3xl font-black text-emerald-400">€ 1,932</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex justify-between">
+                            <span>Income Tax Deduction:</span>
+                            <span id="res-income-tax" class="font-bold text-rose-400">- € 420</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Social Security & Pensions:</span>
+                            <span id="res-social-tax" class="font-bold text-amber-400">- € 448</span>
+                        </div>
+                        <div class="flex justify-between border-t border-slate-800 pt-2 font-medium">
+                            <span>Total Estimated Deductions:</span>
+                            <span id="res-total-deductions" class="font-bold text-slate-100">€ 868 (31%)</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-950/60 p-3 rounded-xl border border-emerald-500/30 text-[11px] text-emerald-200">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Note: Estimates are based on average standard employee tax bands. Actual payslip may vary slightly depending on exact location or allowances.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- TAB 4: SAVED JOBS VIEW -->
+        <section id="tab-saved" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-800">Saved Jobs (Gespeicherte Jobs)</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Quickly access jobs you have bookmarked for later.</p>
+                </div>
+                <button onclick="clearSavedJobs()" class="text-xs text-rose-600 hover:text-rose-700 font-bold px-3 py-1.5 rounded-lg border border-rose-200 hover:bg-rose-50 transition">
+                    <i class="fa-solid fa-trash-can mr-1"></i> Clear All
+                </button>
+            </div>
+
+            <div id="saved-jobs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Dynamic Saved Jobs Injected Here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- WRITE EMPLOYEE REVIEW MODAL -->
+    <div id="review-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div onclick="closeReviewModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative z-10 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg">Write Employee Review</h3>
+                        <p class="text-xs text-slate-500">Arbeitnehmer-Bewertung abgeben</p>
+                    </div>
+                </div>
+                <button onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="employee-review-form" onsubmit="handleSubmitReview(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company Name *</label>
+                    <input type="text" id="rev-company" required placeholder="e.g. Berlin Express Logistics / Curry House Lisbon" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Your Job Title / Role *</label>
+                        <input type="text" id="rev-role" required placeholder="e.g. Line Chef / Warehouse Associate" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Rating (1-5 Stars) *</label>
+                        <select id="rev-rating" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+                            <option value="5">⭐⭐⭐⭐⭐ (5/5) Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ (4/5) Good</option>
+                            <option value="3">⭐⭐⭐ (3/5) Average</option>
+                            <option value="2">⭐⭐ (2/5) Poor</option>
+                            <option value="1">⭐ (1/5) Very Bad</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase mb-1"><i class="fa-solid fa-thumbs-up mr-1"></i> Pros (Vorteile) *</label>
+                    <textarea id="rev-pros" rows="2" required placeholder="On-time salary, friendly staff, free accommodation provided..." class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-rose-700 uppercase mb-1"><i class="fa-solid fa-thumbs-down mr-1"></i> Cons (Nachteile) *</label>
+                    <textarea id="rev-cons" rows="2" required placeholder="Long night shifts, lack of weekend breaks..." class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Advice to Management</label>
+                    <input type="text" id="rev-advice" placeholder="e.g. Provide better overtime compensation" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeReviewModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs">
+                        Cancel
+                    </button>
+                    <button type="button" onclick="submitForm('employee-review-form', handleSubmitReview)" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-md transition">
+                        Submit Review
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- JOB DETAILS MODAL -->
+    <div id="job-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div onclick="closeJobModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl relative z-10 space-y-5 max-h-[90vh] overflow-y-auto">
+            <div id="modal-content">
+                <!-- Injected Job Modal Info -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- BOTTOM MOBILE NAVIGATION BAR -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-30">
+        <div class="grid grid-cols-4 text-center py-2">
+            <button onclick="switchTab('jobs')" id="nav-btn-jobs" class="bottom-nav-btn flex flex-col items-center justify-center text-emerald-600 font-semibold">
+                <i class="fa-solid fa-briefcase text-lg"></i>
+                <span class="text-[10px] mt-0.5">Jobs</span>
+            </button>
+            <button onclick="switchTab('reviews')" id="nav-btn-reviews" class="bottom-nav-btn flex flex-col items-center justify-center text-slate-400 font-semibold">
+                <i class="fa-solid fa-comments text-lg"></i>
+                <span class="text-[10px] mt-0.5">Reviews</span>
+            </button>
+            <button onclick="switchTab('calculator')" id="nav-btn-calculator" class="bottom-nav-btn flex flex-col items-center justify-center text-slate-400 font-semibold">
+                <i class="fa-solid fa-calculator text-lg"></i>
+                <span class="text-[10px] mt-0.5">Salary</span>
+            </button>
+            <button onclick="switchTab('saved')" id="nav-btn-saved" class="bottom-nav-btn flex flex-col items-center justify-center text-slate-400 font-semibold">
+                <i class="fa-solid fa-bookmark text-lg"></i>
+                <span class="text-[10px] mt-0.5">Saved</span>
+            </button>
+        </div>
+    </nav>
+
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // HR WHATSAPP NUMBER
+        const WHATSAPP_HR = "351920755167";
+
+        // Each job can have its own WhatsApp number; falls back to the default HR number
+        function waNumber(job) {
+            return (job && job.whatsapp) ? job.whatsapp : WHATSAPP_HR;
+        }
+
+        // APP STATE
+        let activeCountry = 'DE'; // Default Germany
+        let visibleCount = 12; // jobs shown before "Show more"
+
+        // INITIAL MOCK DATA (Saved in LocalStorage if empty)
+        const INITIAL_JOBS = [
+            {
+                id: 'job-1',
+                title: 'Continental & South Asian Chef',
+                company: 'Bombay Palace Restaurant',
+                country: 'DE',
+                location: 'Munich, Germany',
+                category: 'Gastronomy / Hotel',
+                type: 'Full-Time',
+                salary: '€2,600 - €3,100 / month',
+                visa: 'Yes',
+                status: 'approved',
+                description: 'We are seeking an experienced South Asian Cook/Chef for our high-demand restaurant in Munich. Duties include preparing authentic curries, tandoori items, maintaining hygiene, and team management. Accommodation guidance provided.',
+                date: '2026-10-15'
+            },
+            {
+                id: 'job-2',
+                title: 'Warehouse & Packing Operator',
+                company: 'DHL Supply Chain Logistics',
+                country: 'DE',
+                location: 'Frankfurt, Germany',
+                category: 'Logistics & Delivery',
+                type: 'Full-Time',
+                salary: '€14.50 / hour + overtime',
+                visa: 'EU Citizens/Permit Holders Only',
+                status: 'approved',
+                description: 'Pack, sort, and organize parcels in our Frankfurt logistics hub. Simple German or English level required. Night shift bonuses available.',
+                date: '2026-10-16'
+            },
+            {
+                id: 'job-3',
+                title: 'Full Stack Web Developer (Node/React)',
+                company: 'TechDeshi Solutions',
+                country: 'UK',
+                location: 'London, United Kingdom',
+                category: 'IT & Tech',
+                type: 'Full-Time',
+                salary: '£42,000 - £50,000 / year',
+                visa: 'Yes',
+                status: 'approved',
+                description: 'Looking for a talented Full Stack Developer skilled in React and Node.js. Tier 2 Visa sponsorship available for exceptional candidates.',
+                date: '2026-10-14'
+            },
+            {
+                id: 'job-4',
+                title: 'Hotel Housekeeping & Cleaning Specialist',
+                company: 'Lisbon Grand Coast Hotel',
+                country: 'PT',
+                location: 'Lisbon, Portugal',
+                category: 'Cleaning & General',
+                type: 'Full-Time',
+                salary: '€920 - €1,100 / month',
+                visa: 'Yes',
+                status: 'approved',
+                description: 'Immediate opening for housekeeping staff in Lisbon central area. Assistance with Article 88/89 process support.',
+                date: '2026-10-17'
+            },
+            {
+                id: 'job-5',
+                title: 'E-Commerce Delivery Courier',
+                company: 'FastDelivery Express',
+                country: 'NL',
+                location: 'Amsterdam, Netherlands',
+                category: 'Logistics & Delivery',
+                type: 'Part-Time',
+                salary: '€15.20 / hour',
+                visa: 'EU Citizens/Permit Holders Only',
+                status: 'approved',
+                description: 'Flexible delivery shift positions for scooter and bike couriers. Electric bikes provided.',
+                date: '2026-10-12'
+            }
+        ];
+
+        const INITIAL_REVIEWS = [
+            {
+                id: 'rev-1',
+                company: 'Bombay Palace Restaurant',
+                role: 'Assistant Chef',
+                rating: 5,
+                pros: 'Salaries are always transferred on the 1st of every month. The kitchen staff feels like family.',
+                cons: 'Long standing hours during weekend dinner rushes.',
+                advice: 'Keep up the good work and hire one extra dishwasher.',
+                verified: true,
+                date: '2026-09-20'
+            },
+            {
+                id: 'rev-2',
+                company: 'DHL Supply Chain Logistics',
+                role: 'Warehouse Assistant',
+                rating: 4,
+                pros: 'Very structured work environment, fair overtime extra pay, good health insurance coverage.',
+                cons: 'Physical work can be exhausting in December peak season.',
+                advice: 'Provide more break seating areas in the warehouse.',
+                verified: true,
+                date: '2026-10-02'
+            },
+            {
+                id: 'rev-3',
+                company: 'Lisbon Grand Coast Hotel',
+                role: 'Housekeeper',
+                rating: 4,
+                pros: 'Management helped me get my NIF and Portuguese social security numbers settled smooth.',
+                cons: 'Base salary is moderate.',
+                advice: 'Offer language training classes for foreign staff.',
+                verified: true,
+                date: '2026-10-10'
+            }
+        ];
+
+        // ---------- REAL ENTRY-LEVEL IT JOBS IN GERMANY (found via job boards on 17 Oct 2026) ----------
+        // Each entry links to the job-board page where it was listed. Availability can change at any time.
+        const SEED_VERSION = 'real-it-2026-10-17-wa';
+        const SOURCES = {
+            gd_entrysw: ['Glassdoor', 'https://www.glassdoor.co.in/Job/germany-entry-level-software-developer-jobs-SRCH_IL.0,7_IN96_KO8,38.htm'],
+            gd_entrydev: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-entry-level-developer-jobs-SRCH_IL.0,7_IN96_KO8,29.htm'],
+            gd_juniordev: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-developer-jobs-SRCH_IL.0,7_IN96_KO8,24.htm'],
+            gd_dus: ['Glassdoor', 'https://www.glassdoor.com/Job/dusseldorf-junior-software-developer-jobs-SRCH_IL.0,10_IM1049_KO11,36.htm'],
+            gd_swe: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-software-engineer-jobs-SRCH_IL.0,7_IN96_KO8,32.htm'],
+            devjobs_net: ['DEVjobs.de', 'https://en.devjobs.de/jobs/junior-job-level-net-core'],
+            an_frontend: ['Arbeitnow', 'https://www.arbeitnow.com/jobs/frontend'],
+            an_junior: ['Arbeitnow', 'https://www.arbeitnow.com/jobs/junior'],
+            an_python: ['Arbeitnow', 'https://www.arbeitnow.com/jobs/python'],
+            gd_react: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-react-jobs-SRCH_IL.0,7_IN96_KO8,20.htm'],
+            gd_java: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-java-developer-jobs-SRCH_IL.0,7_IN96_KO8,29.htm'],
+            gd_javaspring: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-java-spring-developer-jobs-SRCH_IL.0,7_IN96_KO8,29.htm'],
+            edeka: ['Glassdoor', 'https://www.glassdoor.com/Job/deutschland-java-backend-developer-jobs-SRCH_IL.0,11_IN96_KO12,34.htm'],
+            gd_net: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-net-developer-jobs-SRCH_IL.0,7_IN96_KO8,28.htm'],
+            gd_javabackend: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-java-backend-developer-jobs-SRCH_IL.0,7_IN96_KO8,30.htm'],
+            gd_reactdev: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-react-developer-jobs-SRCH_IL.0,7_IN96_KO8,23.htm'],
+            gd_da_de: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-data-analyst-jobs-SRCH_IL.0,7_IN96_KO8,27.htm'],
+            gd_da_berlin: ['Glassdoor', 'https://www.glassdoor.com/Job/berlin-junior-data-analyst-jobs-SRCH_IL.0,6_IM1020_KO7,26.htm'],
+            visasponsor: ['VisaSponsor.jobs', 'https://visasponsor.jobs/api/jobs?country=Germany'],
+            bebee: ['bebee', 'https://bebee.com/de/jobs/junior-it-support-engineer-earlybird-gmbh-co-kg-berlin--techmap_de_260164462'],
+            in_support_berlin: ['Indeed', 'https://de.indeed.com/q-junior-it-support-l-berlin-jobs.html'],
+            in_nds: ['Indeed', 'https://de.indeed.com/q-junior-it-support-l-niedersachsen-jobs.html'],
+            jobware: ['Jobware', 'https://www.jobware.de/jobs--fuer-it-support'],
+            in_frankfurt: ['Indeed', 'https://de.indeed.com/q-junior-it-administrator-l-frankfurt-am-main-jobs.html'],
+            kimeta: ['Kimeta', 'https://www.kimeta.de/junior/systemadministrator-in-frankfurt'],
+            in_servicedesk: ['Indeed', 'https://de.indeed.com/q-it-service-desk-mitarbeiter-jobs.html'],
+            in_helpdesk_berlin: ['Indeed', 'https://de.indeed.com/q-it-helpdesk-l-berlin-jobs.html'],
+            in_sd_hamburg: ['Indeed', 'https://de.indeed.com/Service-Desk-Jobs-in-Hamburg'],
+            heise: ['heise Jobs', 'https://jobs.heise.de/it/jobs/mitarbeiter-service-desk-in-hamburg'],
+            st_support: ['StepStone', 'https://www.stepstone.de/jobs/junior-it-support-specialist'],
+            st_itjunior: ['StepStone', 'https://www.stepstone.de/jobs/it-junior'],
+            gd_qa: ['Glassdoor', 'https://www.glassdoor.de/Job/deutschland-junior-qa-engineer-jobs-SRCH_IL.0,11_IN96_KO12,30.htm'],
+            in_qa: ['Indeed', 'https://de.indeed.com/q-junior-qa-engineer-jobs.html'],
+            gd_qatester: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-qa-tester-jobs-SRCH_IL.0,7_IN96_KO8,17.htm'],
+            in_quer: ['Indeed', 'https://de.indeed.com/Quereinsteiger-Softwaretester-Jobs'],
+            gd_cyber_entry: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-entry-level-cyber-security-jobs-SRCH_IL.0,7_IN96_KO8,34.htm'],
+            gd_cyberanalyst: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-cyber-analyst-jobs-SRCH_IL.0,7_IN96_KO8,21.htm'],
+            gd_jsa: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-security-analyst-jobs-SRCH_IL.0,7_IN96_KO8,31.htm'],
+            li_cyber_berlin: ['LinkedIn', 'https://www.linkedin.com/jobs/cyber-security-jobs-berlin?countryRedirected=1'],
+            li_munich: ['LinkedIn', 'https://www.linkedin.com/jobs/devops-engineer-jobs-munich'],
+            devjobs_muc: ['DEVjobs.de', 'https://en.devjobs.de/jobs/dev-ops-engineer-muenchen-62428'],
+            gd_muc_devops: ['Glassdoor', 'https://www.glassdoor.co.uk/Job/munich-devops-engineer-jobs-SRCH_IL.0,6_IC4990924_KO7,22.htm'],
+            devjobsscanner: ['DevJobsScanner', 'https://www.devjobsscanner.com/devops-jobs-in-munich/'],
+            gd_jdevops: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-devops-jobs-SRCH_IL.0,7_IN96_KO8,21.htm'],
+            li_hh_devops: ['LinkedIn', 'https://www.linkedin.com/jobs/devops-engineer-jobs-hamburg'],
+            li_hh_cloud: ['LinkedIn', 'https://www.linkedin.com/jobs/cloud-engineer-jobs-hamburg'],
+            gd_azure: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-azure-cloud-engineer-jobs-SRCH_IL.0,7_IN96_KO8,28.htm'],
+            gd_cloud_berlin: ['Glassdoor', 'https://www.glassdoor.com/Job/berlin-germany-area-junior-cloud-engineer-jobs-SRCH_IL.0,19_IM1020_KO20,41.htm'],
+            gd_cloud_berlin2: ['Glassdoor', 'https://www.glassdoor.com/Job/berlin-germany-junior-cloud-engineer-jobs-SRCH_IL.0,14_IM1020_KO15,36.htm'],
+            gd_awscons: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-aws-cloud-consultant-jobs-SRCH_IL.0,7_IN96_KO8,28.htm'],
+            gd_muc_cloud: ['Glassdoor', 'https://www.glassdoor.com/Job/junior-cloud-engineer-jobs-SRCH_IC4990924_KO0,21.htm'],
+            gd_fe: ['Glassdoor', 'https://www.glassdoor.com/Job/germany-junior-front-end-developer-jobs-SRCH_IL.0,7_IN96_KO8,34.htm'],
+            in_berufseinsteiger: ['Indeed', 'https://de.indeed.com/q-berufseinsteiger-it-jobs.html']
+        };
+
+        // [title, company, location, salary ('' = not stated), source key, short note]
+        const REAL_JOB_ROWS = [
+            ['Junior Developer (Entry-Level)', 'zdrei.com GmbH', 'Köln, Germany', '', 'gd_entrysw', 'Entry-level role working on real projects with modern tools and frameworks.'],
+            ['Junior Software Developer Embedded Systems & AI (d/m/w)', 'Tesat-Spacecom', 'Stuttgart, Germany', '', 'gd_entrysw', 'Software architecture, test strategy and validation for application software.'],
+            ['SAP Developer for PLM and EHS (Developer Trainee, entry level)', 'GRAMONT GmbH', 'Berlin, Germany', '', 'gd_entrydev', 'SAP/ABAP skills are not mandatory at entry level.'],
+            ['Junior Software Developer (m/w/d)', 'Web Loupe Agentur', 'Berlin, Germany', '', 'gd_juniordev', ''],
+            ['(Junior) Software Developer (m/w/d)', 'INTENSIO Software und Consulting GmbH', 'Karlsruhe, Germany', '', 'gd_juniordev', ''],
+            ['Junior Software Developer (m/w/d)', 'HanseSecure', 'Munich, Germany', '€42K - €50K / year (employer provided)', 'gd_juniordev', 'Internal tools, API integrations and automation for IT-security consulting.'],
+            ['(Junior) Software Developer Virtualization & Hypervisor Architecture', 'secunet', 'Berlin, Germany', '€50K / year (employer provided)', 'gd_juniordev', ''],
+            ['(Junior) Software Developer (m/w/d)', 'Reifenhauser NEXT', 'Köln, Germany', '', 'gd_dus', 'Go, React, databases, APIs and software testing.'],
+            ['(Junior) Software Developer (m/w/d)', 'NEC Corporation', 'Mönchengladbach, Germany', '', 'gd_dus', ''],
+            ['Junior SAP ABAP Developer (all genders)', 'vantago', 'Düsseldorf, Germany', '', 'gd_dus', 'Custom SAP development with ABAP / S/4HANA.'],
+            ['Junior Software Developer AI, Robotics & Simulation', 'Bertelsmann', 'Germany', '', 'devjobs_net', ''],
+            ['Junior Software Developer', 'Gate4', 'Bonn, Germany', '', 'devjobs_net', 'Web applications with JavaScript/TypeScript, HTML, CSS, C# and .NET Core.'],
+            ['Junior Software Developer', 'CHECK24 Gruppe', 'Augsburg / Dortmund, Germany', '', 'devjobs_net', 'FinTech solutions with .NET Core and React.'],
+            ['Junior Software Developer C#.NET', 'DAKO GmbH', 'Dresden / Jena, Germany', '', 'devjobs_net', 'Scrum team; modern software components and web services.'],
+            ['Junior System-Engineer (w/m/d)', 'Stiftung Warentest', 'Germany', '€3,834 - €4,438 / month (employer provided)', 'gd_swe', 'Permanent, full-time (39 hours/week).'],
+            ['Junior Software Engineer (m/f/d)', 'Diebold Nixdorf', 'Paderborn, Germany', '', 'gd_swe', ''],
+            ['(Junior) Agentic AI Software Engineer (m/w/d)', 'Reply', 'Berlin, Germany', '', 'gd_swe', 'Production-ready systems built on large language models for clients.'],
+            ['Junior Software Engineer (m/w/d)', 'itechx', 'Saarbrücken, Germany', '', 'gd_swe', ''],
+            ['Junior Frontend Developer (React)', 'dkbcodefactory', 'Berlin, Germany', '', 'an_frontend', ''],
+            ['Junior Software Engineer - Data', 'Almedia', 'Berlin, Germany', '€65,000 - €85,000 / year', 'an_junior', ''],
+            ['Junior Product Builder - AI & Automation', 'Actura Partners GmbH', 'Berlin, Germany', '', 'an_junior', ''],
+            ['Junior Consultant Softwareentwicklung – Java, Spring', 'Haeger Consulting GmbH', 'Bonn, Germany', '', 'an_junior', ''],
+            ['Junior Full-Stack Developer Next.js', 'Linear Service GmbH', 'Berlin, Germany', '', 'an_junior', ''],
+            ['Junior Fullstack Engineer', 'Haiilo', 'Hamburg, Germany', '', 'an_junior', ''],
+            ['Junior Software Engineer (Flutter/Python)', 'Bloom Future', 'Heilbronn, Germany', '€45,000 - €50,000 / year', 'an_python', ''],
+            ['Junior Frontend Engineer', 'Almedia', 'Berlin, Germany', '€60K - €75K / year (employer provided)', 'gd_react', 'React, TypeScript and React Native.'],
+            ['Junior Frontend Developer (f/m/d)', 'Oh so u', 'Hamburg, Germany', '', 'gd_react', 'Automotive web platforms and configurators.'],
+            ['Junior Web Developer (m/w/d) - Node.js / React', 'FinMent', 'Berlin, Germany', '', 'gd_react', ''],
+            ['Frontend Developer:in (Junior / Expert)', 'Mutor', 'Bitterfeld-Wolfen, Germany', '€40K / year (employer provided)', 'gd_react', 'Full- or part-time.'],
+            ['(Junior) Java Developer (m/f/x)', 'Tipico', 'Karlsruhe, Germany', '', 'gd_java', 'Java backend, React frontend, Kubernetes.'],
+            ['Junior Java Developer', 'NOVOSEC', 'Frankfurt am Main, Germany', '', 'gd_java', 'Java applications and backend services; may include work on client sites.'],
+            ['Junior Backend Developer (m/w/d) – JavaScript / TypeScript / NestJS', 'RUBINLAKE GmbH', 'Frankfurt am Main, Germany', '€45K - €60K / year (employer provided)', 'gd_java', ''],
+            ['Web-Developer*in / Software-Developer*in (junior) – Java Backend', 'W+P JobPartner GmbH', 'Hamburg, Germany', '', 'gd_javaspring', ''],
+            ['Junior Developer Flutter / Golang / Java (m/w/d)', 'Edeka', 'Hamburg, Germany', '', 'edeka', ''],
+            ['Junior .NET Developer (m/w)', '2Solution', 'Hamburg, Germany', '', 'gd_net', ''],
+            ['Junior Java Developer (M/W/D)', 'Applus+ IMA', 'Dresden, Germany', '', 'gd_juniordev', 'Java ecosystem; Gradle, Kubernetes, NoSQL.'],
+            ['Junior / Advanced Backend Developer (Java) (all genders)', 'United Digital Group', 'Mainz, Germany', '', 'gd_javabackend', 'Microservices and modern backend architectures.'],
+            ['Software Engineer - Fullstack Junior to Mid Level (m/f/d)', 'Reonic', 'Berlin, Germany', '', 'gd_reactdev', 'React, TypeScript, Tailwind CSS and Node.js.'],
+            ['Junior Growth Data Analyst (m/w/d)', 'Pflegecampus21', 'Berlin, Germany', '', 'gd_da_de', 'SQL, Python and A/B testing.'],
+            ['(Junior) Business Intelligence Analyst (all genders)', 'Homaris', 'Berlin, Germany', '€45K - €55K / year (employer provided)', 'gd_da_de', ''],
+            ['Junior Analyst (m/w/d) - Customer Analytics', 'flaschenpost SE', 'Berlin, Germany', '', 'gd_da_berlin', 'Hybrid work; SQL and Python.'],
+            ['Junior Data Analyst - Customer Identity', 'N26', 'Berlin, Germany', '', 'visasponsor', 'Tagged "EU Blue Card" by the source site.'],
+            ['Junior IT-Support Engineer (m/w/d)', 'Earlybird GmbH & Co. KG', 'Berlin, Germany', '', 'bebee', '1st-level support, mobile device management (Windows/macOS) and access management. The source shows an application deadline of 17.10.2026.'],
+            ['Junior System Administrator (f/m/d)', 'Make IT fix GmbH', 'Berlin, Germany', '', 'in_support_berlin', 'Handling support tickets for hardware, software and network.'],
+            ['(Junior) Systemadministrator (m/w/d)', 'DCI Digital Career Institute GmbH', 'Berlin, Germany', '', 'in_support_berlin', ''],
+            ['Junior Apple IT Systemadministrator (m/w/d) - 32h', 'StoryMachine GmbH', 'Berlin, Germany', '', 'in_support_berlin', '32 hours per week.'],
+            ['Junior IT-Support Employee', 'Daikin Applied Germany GmbH', 'Berlin, Germany', '', 'in_support_berlin', ''],
+            ['Junior IT-Systemadministrator (m/w/d)', 'LINDHORST Gruppe', 'Winsen (Aller), Germany', '', 'in_nds', '1st-level hotline and on-site support at company locations.'],
+            ['Junior IT-Systemadministrator / Junior IT-Techniker (m/w/d)', 'IT-SERVICE.NETWORK', 'Melle / Stuttgart, Germany', '', 'in_nds', 'Servers, storage, network and IT security; small customer projects.'],
+            ['(Junior) ERP-Anwendungsentwickler (m/w/d)', 'Röchling SE & Co. KG', 'Haren, Germany', '', 'in_nds', ''],
+            ['Junior Inhouse Consultant SD (m/w/d)', 'ELA Container', 'Haren, Germany', '', 'in_nds', ''],
+            ['Junior IT-Systemadministrator (m/w/d)', 'Sedlmayr IT GmbH', 'Weißenhorn, Germany', '', 'jobware', 'Full-time; home office listed.'],
+            ['Junior IT-Systemadministrator (m/w/d)', 'Arbeiterwohlfahrt Kreisverband Frankfurt e.V.', 'Frankfurt am Main, Germany', '', 'in_frankfurt', 'Start in the IT department, immediate start.'],
+            ['IT-Support Mitarbeiter / Junior Systemadministrator (m/w/d)', 'ITC Niegemann GmbH', 'Frankfurt am Main, Germany', '', 'in_frankfurt', 'Phone, remote and on-site support at customers; you do not need to be a senior admin.'],
+            ['(Junior) IT-Systemadministrator Linux (m/w/x)', 'grinnberg GmbH', 'Frankfurt am Main, Germany', '', 'kimeta', ''],
+            ['IT Service Desk Mitarbeiter (m/w/d) - Junior Level', 'Circet Deutschland SE', 'München, Germany', '', 'in_servicedesk', '1st-level support and documentation of IT requests.'],
+            ['IT-Support Berlin / 1st Level Support (m/w/d) - Junior Position', 'stud-IT GmbH', 'Berlin, Germany', '', 'in_helpdesk_berlin', ''],
+            ['Junior Supporter / Helpdesk (m/w/d)', 'SOMI Experts GmbH', 'Berlin, Germany', '', 'in_helpdesk_berlin', 'Multiple open positions.'],
+            ['(Junior) IT Help Desk Specialist (f/m/d)', 'Productsup', 'Berlin, Germany', '', 'in_helpdesk_berlin', ''],
+            ['IT Service Desk Mitarbeiter (w/m/d)', 'GEMA International Hosting AG', 'Hamburg, Germany', '', 'in_sd_hamburg', 'Open to people entering IT as well as those with first support experience.'],
+            ['IT Service Desk Mitarbeiter (m/w/d)', 'Hanfried Personaldienstleistungen GmbH', 'Hamburg, Germany', '', 'heise', 'Career starters welcome; 1st-level support with Windows. Staffing-agency posting for a client.'],
+            ['Junior IT-Support Techniker (m/w/d)', 'Zuegg Deutschland GmbH', 'Germany', '', 'st_support', ''],
+            ['Junior IT-Support (all genders)', 'CA Immo Deutschland GmbH', 'Germany', '', 'st_itjunior', ''],
+            ['(Junior) QA Engineer/Software-Tester (m/w/d) – Produktqualität & Testautomatisierung', 'CHECK24', 'Dortmund, Germany', '', 'gd_qa', 'First scripting/programming knowledge expected; German is listed as a skill.'],
+            ['MedTech (Junior) Software QA Engineer (m/w/d)', 'Clinomic', 'Aachen, Germany', '', 'gd_qa', 'Jira, CI/CD, Selenium and Java.'],
+            ['(Junior) Softwaretester (m/w/d)', 'The Quality Group GmbH (TQG)', 'Hamburg, Germany', '', 'in_qa', ''],
+            ['Junior QA Tester (f/m/d)', 'Sunday', 'Hamburg, Germany', '', 'gd_qatester', 'Testing new game features in each release.'],
+            ['Junior Systemanalytiker / Softwaretester (m/w/d)', 'CETEQ GmbH', 'Wuppertal, Germany', '', 'in_quer', 'Test strategies and test concepts.'],
+            ['CYBER DEFENCE ANALYST I (D/M/W)', 'Airbus', 'Munich, Germany', '', 'gd_cyber_entry', 'Entry level; handling security incident tickets according to a playbook.'],
+            ['(Junior) SOC Analyst (m/w/d)', 'DeltaSecure GmbH', 'Frankfurt am Main, Germany', '', 'gd_cyberanalyst', 'Network monitoring and response to cyber threats for customers.'],
+            ['JUNIOR SECURITY ANALYST (M/W/D)', 'Reply', 'Köln, Germany', '', 'gd_jsa', 'Security monitoring, log analysis and SIEM tools (e.g. Splunk).'],
+            ['Junior Cyber Security Consultant DRC (m/w/d)', 'Atos', 'Berlin, Germany', '', 'li_cyber_berlin', ''],
+            ['Junior DevOps ELK Engineer (f/m/d)', 'The Mobility House', 'Munich, Germany', '', 'li_munich', ''],
+            ['Junior DevOps Engineer', 'Flixbus', 'Munich, Germany', '', 'devjobs_muc', 'AWS, Kubernetes and Terraform.'],
+            ['Junior DevOps Engineer', 'myposter', 'Munich, Germany', '', 'gd_muc_devops', 'CI/CD pipelines, Docker and Terraform.'],
+            ['Junior DevOps Engineer (m/w/d)', 'Kartenliebe GmbH', 'Munich, Germany', '', 'devjobsscanner', ''],
+            ['Junior DevOps Engineer / Full Stack Entwickler (m/w/d)', 'innobis', 'Hamburg, Germany', '', 'gd_jdevops', 'Training on the job with a mentor.'],
+            ['Junior DevOps & Infrastructure Engineer (m/w/d)', 'Real Estate Operating System', 'Hamburg, Germany', '', 'gd_jdevops', ''],
+            ['(JUNIOR) AI-DRIVEN PLATFORM ENGINEER (M/W/D)', 'Reply', 'Munich, Germany', '', 'gd_jdevops', 'Some first cloud, DevOps or software-engineering experience expected.'],
+            ['Junior DevOps Engineer (gn) AWS', 'workidentity GmbH', 'Hamburg, Germany', '', 'li_hh_devops', ''],
+            ['Junior DevOps Engineer (gn) Azure', 'workidentity GmbH', 'Hamburg, Germany', '', 'li_hh_devops', ''],
+            ['Junior DevOps Engineer (gn) GCP', 'workidentity GmbH', 'Hamburg, Germany', '', 'li_hh_devops', ''],
+            ['(Junior) Cloud Engineer (gn) remote', 'workidentity GmbH', 'Hamburg, Germany', '', 'li_hh_cloud', ''],
+            ['(Junior) Cloud Engineer (gn) M365 & Azure', 'workidentity GmbH', 'Hamburg, Germany', '', 'li_hh_cloud', ''],
+            ['Junior (Azure) DevOps Engineer (m/w/d)', 'Funk', 'Hamburg, Germany', '', 'li_hh_cloud', ''],
+            ['(Junior) Cloud Engineer (m/w/d)', 'DIE ZEIT', 'Hamburg / Berlin, Germany', '', 'li_hh_cloud', ''],
+            ['Junior Cloud Engineer (Azure) (m/w/d)', 'GRAYOAK', 'Frankfurt am Main, Germany', '', 'gd_azure', 'Azure infrastructure, Infrastructure as Code and Terraform.'],
+            ['JUNIOR AI / CLOUD ENGINEER (M/W/D) – ABSOLVENT:INNEN WILLKOMMEN!', 'Reply', 'Berlin, Germany', '', 'gd_cloud_berlin', 'Graduates welcome; AWS, Azure or GCP basics expected.'],
+            ['JUNIOR CLOUD ENGINEER (M/W/D) – ABSOLVENT:INNEN WILLKOMMEN!', 'Reply', 'Berlin, Germany', '', 'gd_cloud_berlin2', 'Graduates welcome; first practical public-cloud experience expected.'],
+            ['JUNIOR GENAI ENGINEER (M/W/D)', 'Reply', 'Berlin, Germany', '', 'gd_cloud_berlin', 'AI pipelines, APIs and interactive applications.'],
+            ['(JUNIOR) MACHINE LEARNING ENGINEER (M/W/D)', 'Reply', 'Berlin, Germany', '', 'gd_cloud_berlin', ''],
+            ['JUNIOR AZURE PLATFORM ENGINEER (M/W/D)', 'Reply', 'Berlin, Germany', '', 'gd_cloud_berlin2', 'Operating and developing a Kubernetes platform.'],
+            ['JUNIOR CLOUD COST & ANALYTICS ENGINEER (M/W/D)', 'Reply', 'Berlin, Germany', '', 'gd_cloud_berlin2', ''],
+            ['JUNIOR AWS CLOUD CONSULTANT (M/W/D)', 'Reply', 'Berlin, Germany', '', 'gd_awscons', 'Containers (Kubernetes, Docker), CI/CD and AWS.'],
+            ['Junior AI Engineer (w/m/d)', 'FLEX Capital Management', 'Berlin, Germany', '', 'gd_cloud_berlin', ''],
+            ['Junior Consultant DevOps & Cloud Engineer (m/w/d)', 'XaaS', 'Hamburg, Germany (remote)', '€50K - €65K / year', 'gd_awscons', 'One source lists German as required.'],
+            ['(Junior) Cloud Consultant', 'DOH', 'Mainz, Germany', '', 'gd_awscons', 'Microsoft 365 / Azure or AWS cloud migration projects.'],
+            ['Azure Cloud Engineer (m/w/d) – Berufseinsteiger willkommen', 'Galileo Group (Germany)', 'Munich, Germany', '', 'gd_muc_cloud', 'Beginners welcome; first cloud experience is a plus.'],
+            ['Hochschulabsolvent - Berufseinsteiger als IT-Berater / Software-Entwickler (m/w/d)', 'PTA GmbH', 'Berlin, Germany', '', 'in_berufseinsteiger', 'Graduate / career-starter role.'],
+            ['(Junior) Fullstack Developer (m/f/d) AurumCars', 'CHECK24', 'Germany', '', 'gd_fe', 'The listing asks for German and English at B2 level.']
+        ];
+
+        const REAL_JOBS = REAL_JOB_ROWS.map((r, i) => {
+            const src = SOURCES[r[4]];
+            return {
+                id: 'real-' + (i + 1),
+                title: r[0],
+                company: r[1],
+                country: 'DE',
+                location: r[2],
+                category: 'IT & Tech',
+                type: 'Full-Time',
+                salary: r[3] || 'See original posting',
+                visa: 'Check original posting',
+                status: 'approved',
+                description: `Entry-level / junior IT role at ${r[1]} (${r[2]}), found on ${src[0]} on 17 Oct 2026.` +
+                    (r[5] ? ` ${r[5]}` : '') +
+                    ` Message us on WhatsApp for the full description, requirements and how to apply. Many German employers expect German language skills.`,
+                date: '2026-10-17',
+                sourceName: src[0],
+                sourceUrl: src[1]
+            };
+        });
+
+        // Adds the real jobs once per SEED_VERSION
+        function mergeSeedJobs() {
+            if (lsGet('jfd_seed_v') === SEED_VERSION) return;
+            // Replace any older copies of the seeded jobs with the current ones
+            const jobs = getStoredJobs().filter(j => !String(j.id).startsWith('real-'));
+            REAL_JOBS.forEach(j => jobs.push(j));
+            saveJobs(jobs);
+            lsSet('jfd_seed_v', SEED_VERSION);
+        }
+
+        // LOCALSTORAGE HELPER FUNCTIONS
+        // Safe storage: falls back to memory if the browser/preview blocks localStorage
+        const memStore = {};
+        function lsGet(key) {
+            try { return localStorage.getItem(key); } catch (e) { return memStore[key] || null; }
+        }
+        function lsSet(key, value) {
+            memStore[key] = value;
+            try { localStorage.setItem(key, value); } catch (e) {}
+        }
+
+        function getStoredJobs() {
+            const data = lsGet('jfd_jobs');
+            return data ? JSON.parse(data) : INITIAL_JOBS;
+        }
+
+        function saveJobs(jobs) {
+            lsSet('jfd_jobs', JSON.stringify(jobs));
+        }
+
+        function getStoredReviews() {
+            const data = lsGet('jfd_reviews');
+            return data ? JSON.parse(data) : INITIAL_REVIEWS;
+        }
+
+        function saveReviews(reviews) {
+            lsSet('jfd_reviews', JSON.stringify(reviews));
+        }
+
+        function getSavedJobIds() {
+            const data = lsGet('jfd_saved_ids');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveSavedJobIds(ids) {
+            lsSet('jfd_saved_ids', JSON.stringify(ids));
+        }
+
+        // INITIALIZATION
+        window.onload = function() {
+            if (!lsGet('jfd_jobs')) saveJobs(INITIAL_JOBS);
+            if (!lsGet('jfd_reviews')) saveReviews(INITIAL_REVIEWS);
+            mergeSeedJobs();
+
+            renderJobs();
+            renderEmployeeReviews();
+            calculateSalary();
+        };
+
+        // NAVIGATION TABS
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-600');
+                btn.classList.add('text-slate-400');
+            });
+            const activeNav = document.getElementById(`nav-btn-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400');
+                activeNav.classList.add('text-emerald-600');
+            }
+
+            if (tabId === 'saved') renderSavedJobs();
+            if (tabId === 'reviews') renderEmployeeReviews();
+        }
+
+        function navigateTab(tabId) {
+            toggleMobileMenu();
+            switchTab(tabId);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.remove('translate-x-full');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        // COUNTRY SWITCHER
+        function setCountry(countryCode) {
+            activeCountry = countryCode;
+            visibleCount = 12;
+
+            document.querySelectorAll('.country-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-emerald-800', 'shadow');
+                btn.classList.add('text-emerald-100', 'hover:bg-white/10');
+            });
+            const activeBtn = document.getElementById(`btn-${countryCode}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-white', 'text-emerald-800', 'shadow');
+                activeBtn.classList.remove('text-emerald-100', 'hover:bg-white/10');
+            }
+
+            document.querySelectorAll('.m-country-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-emerald-800');
+                btn.classList.add('text-emerald-100', 'bg-emerald-700/50');
+            });
+            const mActiveBtn = document.getElementById(`mbtn-${countryCode}`);
+            if (mActiveBtn) {
+                mActiveBtn.classList.add('bg-white', 'text-emerald-800');
+                mActiveBtn.classList.remove('text-emerald-100', 'bg-emerald-700/50');
+            }
+
+            renderJobs();
+        }
+
+        // RENDER JOBS LIST
+        function renderJobs() {
+            const container = document.getElementById('jobs-container');
+            const searchVal = (document.getElementById('search-keyword')?.value || '').toLowerCase();
+            const catVal = document.getElementById('filter-category')?.value || '';
+            const typeVal = document.getElementById('filter-type')?.value || '';
+
+            const allJobs = getStoredJobs();
+            const savedIds = getSavedJobIds();
+
+            const filtered = allJobs.filter(job => {
+                if (job.status !== 'approved') return false;
+                if (job.country !== activeCountry) return false;
+                if (catVal && job.category !== catVal) return false;
+                if (typeVal && job.type !== typeVal) return false;
+                if (searchVal) {
+                    const haystack = `${job.title} ${job.company} ${job.location} ${job.description}`.toLowerCase();
+                    if (!haystack.includes(searchVal)) return false;
+                }
+                return true;
+            });
+
+            document.getElementById('job-count-badge').innerText = `Showing ${Math.min(filtered.length, visibleCount)} of ${filtered.length} Jobs in ${getCountryName(activeCountry)}`;
+            const remaining = filtered.length - visibleCount;
+            const moreHtml = remaining > 0
+                ? `<div class="col-span-full text-center py-2"><button onclick="showMoreJobs()" class="px-6 py-3 bg-white hover:bg-emerald-50 text-emerald-700 font-bold rounded-xl border border-emerald-200 shadow-sm text-sm transition">Show more jobs (${remaining} remaining)</button></div>`
+                : '';
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-100 space-y-3">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300"></i>
+                        <h3 class="font-bold text-slate-700 text-lg">No active jobs found</h3>
+                        <p class="text-xs text-slate-500">Try changing your search keywords or switch country tab.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.slice(0, visibleCount).map(job => {
+                const isSaved = savedIds.includes(job.id);
+                const waMessage = encodeURIComponent(`Hello JFD HR Team, I am interested in applying for:\n\n*Position:* ${job.title}\n*Company:* ${job.company}\n*Location:* ${job.location}\n\nPlease share details on application requirements.`);
+                const waUrl = `https://wa.me/${waNumber(job)}?text=${waMessage}`;
+
+                return `
+                    <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-100 transition flex flex-col justify-between space-y-4 relative">
+                        <div class="space-y-2">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                        ${job.category}
+                                    </span>
+                                    <h3 class="font-bold text-slate-800 text-base mt-1.5 leading-snug line-clamp-1">${job.title}</h3>
+                                    <p class="text-xs text-slate-500 font-medium">${job.company}</p>
+                                    ${job.sourceName ? `<p class="text-[10px] text-sky-700 font-semibold mt-0.5"><i class="fa-solid fa-link mr-1"></i>Found via ${job.sourceName}</p>` : ''}
+                                </div>
+                                <button onclick="toggleSaveJob('${job.id}')" class="text-slate-300 hover:text-amber-500 transition p-1">
+                                    <i class="${isSaved ? 'fa-solid text-amber-500' : 'fa-regular'} fa-bookmark text-lg"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-600 pt-1">
+                                <span class="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                                    <i class="fa-solid fa-location-dot text-rose-500"></i> ${job.location}
+                                </span>
+                                <span class="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                                    <i class="fa-solid fa-clock text-blue-500"></i> ${job.type}
+                                </span>
+                            </div>
+
+                            <div class="bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-100 flex items-center justify-between">
+                                <span class="text-xs text-slate-500 font-medium">Offered Salary:</span>
+                                <span class="text-xs font-black text-emerald-700">${job.salary}</span>
+                            </div>
+
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                                ${job.description}
+                            </p>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
+                            <button onclick="openJobModal('${job.id}')" class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition text-center">
+                                Details
+                            </button>
+                            <a href="${waUrl}" target="_blank" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition text-center flex items-center justify-center gap-1.5">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Apply on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('') + moreHtml;
+        }
+
+        function showMoreJobs() {
+            visibleCount += 12;
+            renderJobs();
+        }
+
+        function filterJobs() {
+            visibleCount = 12;
+            renderJobs();
+        }
+
+        function getCountryName(code) {
+            switch(code) {
+                case 'DE': return 'Germany 🇩🇪';
+                case 'UK': return 'United Kingdom 🇬🇧';
+                case 'PT': return 'Portugal 🇵🇹';
+                case 'NL': return 'Netherlands 🇳🇱';
+                default: return 'Europe 🇪🇺';
+            }
+        }
+
+        // JOB MODAL
+        function openJobModal(jobId) {
+            const jobs = getStoredJobs();
+            const job = jobs.find(j => j.id === jobId);
+            if (!job) return;
+
+            const waMessage = encodeURIComponent(`Hello JFD HR Team, I am applying for position:\n*Title:* ${job.title}\n*Company:* ${job.company}\n*Location:* ${job.location}`);
+            const waUrl = `https://wa.me/${waNumber(job)}?text=${waMessage}`;
+
+            document.getElementById('modal-content').innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                        <div>
+                            <span class="text-xs font-bold uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                                ${job.category}
+                            </span>
+                            <h3 class="text-xl font-extrabold text-slate-800 mt-1">${job.title}</h3>
+                            <p class="text-xs font-semibold text-slate-500">${job.company} • ${job.location}</p>
+                        </div>
+                        <button onclick="closeJobModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                            <span class="text-slate-400 block">Job Type:</span>
+                            <span class="font-bold text-slate-800">${job.type}</span>
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                            <span class="text-slate-400 block">Salary Offer:</span>
+                            <span class="font-bold text-emerald-600">${job.salary}</span>
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 col-span-2">
+                            <span class="text-slate-400 block">Visa / Work Permit Support:</span>
+                            <span class="font-bold text-slate-800"><i class="fa-solid fa-passport text-emerald-500 mr-1"></i> ${job.visa}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold uppercase text-slate-700 mb-1">Full Description & Requirements</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            ${job.description}
+                        </p>
+                    </div>
+
+                    <div class="pt-2 flex items-center gap-3">
+                        <button onclick="closeJobModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs flex-1">
+                            Close
+                        </button>
+                        <a href="${waUrl}" target="_blank" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-md transition flex-1 text-center flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Apply on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('job-modal').classList.remove('hidden');
+        }
+
+        function closeJobModal() {
+            document.getElementById('job-modal').classList.add('hidden');
+        }
+
+        // SAVED JOBS LOGIC
+        function toggleSaveJob(jobId) {
+            let saved = getSavedJobIds();
+            if (saved.includes(jobId)) {
+                saved = saved.filter(id => id !== jobId);
+            } else {
+                saved.push(jobId);
+            }
+            saveSavedJobIds(saved);
+            renderJobs();
+            renderSavedJobs();
+        }
+
+        function renderSavedJobs() {
+            const container = document.getElementById('saved-jobs-container');
+            const savedIds = getSavedJobIds();
+            const allJobs = getStoredJobs();
+
+            const savedJobs = allJobs.filter(j => savedIds.includes(j.id));
+
+            if (savedJobs.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-100 space-y-2">
+                        <i class="fa-regular fa-bookmark text-4xl text-slate-300"></i>
+                        <h3 class="font-bold text-slate-700 text-base">No saved jobs yet</h3>
+                        <p class="text-xs text-slate-500">Bookmark jobs while browsing to review them later.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = savedJobs.map(job => {
+                const waMessage = encodeURIComponent(`Hello JFD HR Team, I am applying for saved position: ${job.title} at ${job.company}`);
+                const waUrl = `https://wa.me/${waNumber(job)}?text=${waMessage}`;
+
+                return `
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm">${job.title}</h3>
+                                <p class="text-xs text-slate-500">${job.company} • ${job.location}</p>
+                            </div>
+                            <button onclick="toggleSaveJob('${job.id}')" class="text-rose-500 hover:text-rose-700 text-xs font-bold p-1">
+                                <i class="fa-solid fa-xmark text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="text-xs text-emerald-700 font-bold bg-emerald-50 p-2 rounded-lg">
+                            Salary: ${job.salary}
+                        </div>
+                        <a href="${waUrl}" target="_blank" class="block w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl text-center shadow">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> Apply on WhatsApp
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearSavedJobs() {
+            saveSavedJobIds([]);
+            renderSavedJobs();
+            renderJobs();
+        }
+
+
+        // EMPLOYEE REVIEWS LOGIC
+        function renderEmployeeReviews() {
+            const container = document.getElementById('reviews-container');
+            const searchVal = (document.getElementById('review-search')?.value || '').toLowerCase();
+            const reviews = getStoredReviews();
+
+            const filtered = reviews.filter(rev => {
+                if (searchVal) {
+                    const haystack = `${rev.company} ${rev.role} ${rev.pros} ${rev.cons}`.toLowerCase();
+                    if (!haystack.includes(searchVal)) return false;
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-100 space-y-2">
+                        <i class="fa-solid fa-comments text-4xl text-slate-300"></i>
+                        <h3 class="font-bold text-slate-700 text-base">No employee reviews found</h3>
+                        <p class="text-xs text-slate-500">Be the first employee to leave feedback for an EU company.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(rev => {
+                const stars = '⭐'.repeat(rev.rating);
+                return `
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4 relative">
+                        <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Verified Employee
+                                </span>
+                                <h3 class="font-black text-slate-800 text-lg mt-1">${rev.company}</h3>
+                                <p class="text-xs text-slate-500 font-medium">Role: <span class="text-slate-700 font-bold">${rev.role}</span></p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-amber-500">${stars}</div>
+                                <span class="text-[10px] text-slate-400">${rev.date || 'Recent'}</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs">
+                            <div class="bg-emerald-50/70 p-3 rounded-xl border border-emerald-100">
+                                <span class="font-bold text-emerald-800 block mb-0.5"><i class="fa-solid fa-thumbs-up mr-1"></i> Pros (Vorteile):</span>
+                                <p class="text-slate-700 leading-relaxed">${rev.pros}</p>
+                            </div>
+
+                            <div class="bg-rose-50/70 p-3 rounded-xl border border-rose-100">
+                                <span class="font-bold text-rose-800 block mb-0.5"><i class="fa-solid fa-thumbs-down mr-1"></i> Cons (Nachteile):</span>
+                                <p class="text-slate-700 leading-relaxed">${rev.cons}</p>
+                            </div>
+
+                            ${rev.advice ? `
+                                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                    <span class="font-bold text-slate-700 block mb-0.5"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Advice to Management:</span>
+                                    <p class="text-slate-600 italic">${rev.advice}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openReviewModal() {
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('review-modal').classList.add('hidden');
+        }
+
+        function handleSubmitReview(e) {
+            e.preventDefault();
+            const company = document.getElementById('rev-company').value.trim();
+            const role = document.getElementById('rev-role').value.trim();
+            const rating = parseInt(document.getElementById('rev-rating').value);
+            const pros = document.getElementById('rev-pros').value.trim();
+            const cons = document.getElementById('rev-cons').value.trim();
+            const advice = document.getElementById('rev-advice').value.trim();
+
+            const newReview = {
+                id: 'rev-' + Date.now(),
+                company,
+                role,
+                rating,
+                pros,
+                cons,
+                advice,
+                verified: true,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            const reviews = getStoredReviews();
+            reviews.unshift(newReview);
+            saveReviews(reviews);
+
+            document.getElementById('employee-review-form').reset();
+            closeReviewModal();
+            renderEmployeeReviews();
+
+            showToast("Review submitted successfully! Thank you for helping fellow workers.");
+        }
+
+
+        // SALARY CALCULATOR LOGIC
+        function calculateSalary() {
+            const country = document.getElementById('calc-country').value;
+            const gross = parseFloat(document.getElementById('calc-gross').value) || 0;
+            const isMarried = document.getElementById('calc-status').value === 'married';
+
+            const curr = country === 'UK' ? '£' : '€';
+            document.getElementById('calc-currency-symbol').innerText = curr;
+
+            let incomeTaxPercent = 0.15;
+            let socialPercent = 0.16;
+
+            if (country === 'DE') {
+                incomeTaxPercent = isMarried ? 0.12 : 0.16;
+                socialPercent = 0.19;
+            } else if (country === 'UK') {
+                incomeTaxPercent = 0.14;
+                socialPercent = 0.10;
+            } else if (country === 'PT') {
+                incomeTaxPercent = isMarried ? 0.11 : 0.14;
+                socialPercent = 0.11;
+            } else if (country === 'NL') {
+                incomeTaxPercent = 0.18;
+                socialPercent = 0.12;
+            }
+
+            const incomeTax = gross * incomeTaxPercent;
+            const socialTax = gross * socialPercent;
+            const totalDeduction = incomeTax + socialTax;
+            const net = Math.max(0, gross - totalDeduction);
+            const effPercent = gross > 0 ? Math.round((totalDeduction / gross) * 100) : 0;
+
+            document.getElementById('res-net-salary').innerText = `${curr} ${Math.round(net).toLocaleString()}`;
+            document.getElementById('res-income-tax').innerText = `- ${curr} ${Math.round(incomeTax).toLocaleString()}`;
+            document.getElementById('res-social-tax').innerText = `- ${curr} ${Math.round(socialTax).toLocaleString()}`;
+            document.getElementById('res-total-deductions').innerText = `${curr} ${Math.round(totalDeduction).toLocaleString()} (${effPercent}%)`;
+        }
+
+
+        // Submit helper that works even where the browser/preview blocks form submission
+        function submitForm(formId, handler) {
+            const form = document.getElementById(formId);
+            if (form && !form.reportValidity()) return;
+            handler({ preventDefault() {} });
+        }
+
+        // TOAST NOTIFICATION HELPER
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 right-4 z-[60] px-4 py-3 rounded-xl shadow-xl text-xs font-bold text-white transition transform duration-300 ${isError ? 'bg-rose-600' : 'bg-slate-900 border border-emerald-500'}`;
+            toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-triangle-exclamation' : 'fa-circle-check'} mr-2"></i>${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
